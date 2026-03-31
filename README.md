@@ -17,3 +17,7 @@ do
     --protein=on \
     $f > ${f%.fasta}.out"
 done
+
+Signal P
+
+extract_signalp.py
