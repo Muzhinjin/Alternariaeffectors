@@ -21,3 +21,23 @@ done
 Signal P
 
 extract_signalp.py
+#!/bin/bash
+
+Effectors only remain with
+
+for f in *.fasta; do
+    awk '
+    /^>/ {
+        header=$0
+        getline seq
+        getline pred
+
+        if (header ~ /\| SP$/) {
+            print header
+            print seq
+        }
+    }
+    ' "$f" > "${f%.fasta}_SP_only.fasta"
+done
+
+grep -c "^>" *_SP_only.fasta
