@@ -49,3 +49,4 @@ unzip master.zip
 cd cdhit-master
 make
 /home/muzhinjin/Alternariaeffectors/Alternariasequences/Proteins/effectorsnotmless300/cdhit-master/cd-hit -i AL_all.fa -o AL_nr.fa -c 0.9 -n 5
+/home/muzhinjin/tikafinal/ncbi-blast-2.15.0+/bin/makeblastdb -in As_nr.fa -dbtype prot -out As_db
