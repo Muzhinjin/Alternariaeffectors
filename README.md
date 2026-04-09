@@ -41,3 +41,11 @@ for f in *.fasta; do
 done
 
 grep -c "^>" *_SP_only.fasta
+
+cat AL*under300.fa > AL_all.fa
+# Manually install
+wget https://github.com/weizhongli/cdhit/archive/refs/heads/master.zip
+unzip master.zip
+cd cdhit-master
+make
+/home/muzhinjin/Alternariaeffectors/Alternariasequences/Proteins/effectorsnotmless300/cdhit-master/cd-hit -i AL_all.fa -o AL_nr.fa -c 0.9 -n 5
