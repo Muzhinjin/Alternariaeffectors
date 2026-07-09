@@ -50,3 +50,43 @@ cd cdhit-master
 make
 /home/muzhinjin/Alternariaeffectors/Alternariasequences/Proteins/effectorsnotmless300/cdhit-master/cd-hit -i AL_all.fa -o AL_nr.fa -c 0.9 -n 5
 /home/muzhinjin/tikafinal/ncbi-blast-2.15.0+/bin/makeblastdb -in As_nr.fa -dbtype prot -out As_db
+
+for fasta in *.fasta
+do
+    name=$(basename "$fasta" .fasta)
+
+    ern jobs submit \
+        --name="BUSCO_${name}" \
+        --threads=32 \
+        --memory=128gb \
+        --hours=48 \
+        --input="$fasta" \
+        --module="busco/1.0_88de6b8" \
+        --command=busco -- \
+        "$fasta" \
+        -l dothideomycetes_odb10 \
+        -m genome \
+        -o "${name}_busco" \
+        -c 32
+done
+
+# QUAST
+
+#!/bin/bash
+
+for fasta in *.fasta
+do
+    name=$(basename "$fasta" .fasta)
+
+    ern jobs submit \
+        --name="QUAST_${name}" \
+        --threads=32 \
+        --memory=128gb \
+        --hours=24 \
+        --input="$fasta" \
+        --module="quast/5.2.0" \
+        --command=quast.py -- \
+        "$fasta" \
+        -o "${name}_quast" \
+        -t 32
+done
